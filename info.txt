@@ -1,0 +1,5 @@
+npm i -g http-server
+
+npm i -g @vue/cli
+
+vue create hello-cli-world
