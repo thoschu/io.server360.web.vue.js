@@ -61,3 +61,6 @@ typings/
 .next
 
 .idea
+
+hello-cli/node_modules/
+hello-cli/dist/
