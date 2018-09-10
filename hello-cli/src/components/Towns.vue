@@ -26,12 +26,15 @@
                 false,
                 false,
                 true
-            ]
+            ],
+            newTown: ''
         }),
         methods: {
-            addTown() {},
+            addTown() {
+                console.log('ADD' + this.newTown);
+            },
             deleteTown() {
-
+                console.log('REMOVE');
             }
         }
     }
