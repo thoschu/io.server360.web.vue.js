@@ -19,3 +19,5 @@ npm run build
 ```
 npm run lint
 ```
+### Links
+https://baianat.github.io/vee-validate/

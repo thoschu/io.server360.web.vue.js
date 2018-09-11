@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "http-server": "^0.11.1",
-    "vue": "^2.5.17"
+    "vee-validate": "^2.1.0-beta.8",
+    "vue": "^2.5.17",
+    "vuejs-logger": "1.5.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",
