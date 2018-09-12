@@ -2,6 +2,9 @@ const express = require('express'),
     graphqlHTTP = require('express-graphql'),
     {buildSchema} = require('graphql'),
     cors = require('cors'),
+    R = require('ramda'),
+    rp = require('request-promise'),
+    cheerio = require('cheerio'),
     app = express();
 
 // Schema auf Basis des GraphQL-Konzepts
@@ -24,6 +27,7 @@ const schema = buildSchema(`
     
     type Departments {
         kind(index: Int): String
+        info: String
     }
 `);
 
@@ -58,6 +62,23 @@ class Departments {
 
     kind({index}) {
         return this._departments[index];
+    }
+
+    async info() {
+        return await rp({
+            uri: 'https://www.thomas-schulte.de/disclaimer.html',
+            transform: body => {
+                return cheerio.load(body);
+            }
+        })
+        .then($ => {
+            let smwlih = $('#software-made-with-love-in-hamburg');
+            console.log(smwlih);
+            return text;
+        })
+        .catch(err => {
+            console.error(err);
+        });
     }
 }
 

@@ -20,8 +20,6 @@
         <Towns v-bind:towns="towns"/>
         <Test msg="Foo bar baz"/>
         <hr>
-        <HelloWorld msg="Welcome to Your Vue.js App"/>
-        <hr>
         <ul>
             <li>
                 <router-link to="/info">INFO</router-link>
@@ -30,10 +28,12 @@
                  <router-link to="/images">IMAGES</router-link>
              </li>
         </ul>
-        <transition enter-active-class="animated flipInX">
+        <transition enter-active-class="animated zoomIn">
             <router-view></router-view>
         </transition>
         <!--<Info />-->
+        <hr>
+        <HelloWorld msg="Welcome to Your Vue.js App"/>
     </div>
 </template>
 <script>
