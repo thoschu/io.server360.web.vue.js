@@ -19,6 +19,11 @@ const schema = buildSchema(`
         id: String
         name: String
         towns: [String]
+        departments: Departments
+    }
+    
+    type Departments {
+        kind(index: Int): String
     }
 `);
 
@@ -39,6 +44,20 @@ class User {
 
     towns() {
         return this._towns
+    }
+
+    departments() {
+        return new Departments();
+    }
+}
+
+class Departments {
+    constructor() {
+        this._departments = ['RequireJS', 'CommonJS', 'AMD', 'ES2015'];
+    }
+
+    kind({index}) {
+        return this._departments[index];
     }
 }
 
