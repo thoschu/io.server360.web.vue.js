@@ -77,9 +77,7 @@ class Departments {
             smwlih = R.split(' ', smwlih);
             smwlih = R.map(R.trim, smwlih);
             smwlih = R.map(x => x === '' ? '❤' : x, smwlih);
-            smwlih =  R.join(' ', smwlih);
-
-            return smwlih;
+            return R.join(' ', smwlih);
         })
         .catch(err => {
             console.error(err);
