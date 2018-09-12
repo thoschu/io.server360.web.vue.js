@@ -6,7 +6,9 @@
     </div>
     -->
     <div>
-        <Town v-for="(data, index) in towns" v-bind:key="index" :town="'# ' + data" :done="isDone[index]" />
+        <transition-group enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
+            <Town v-for="(data, index) in towns" v-bind:key="index" :town="'# ' + data" :done="isDone[index]" />
+        </transition-group>
     </div>
 </template>
 
