@@ -72,9 +72,14 @@ class Departments {
             }
         })
         .then($ => {
-            let smwlih = $('#software-made-with-love-in-hamburg');
-            console.log(smwlih);
-            return text;
+            //const smwlih = R.join(' ', R.map(x => x === '' ? '❤' : x,  R.map(R.trim, R.split(' ', $('#software-made-with-love-in-hamburg').text()))));
+            let smwlih = $('#software-made-with-love-in-hamburg').text();
+            smwlih = R.split(' ', smwlih);
+            smwlih = R.map(R.trim, smwlih);
+            smwlih = R.map(x => x === '' ? '❤' : x, smwlih);
+            smwlih =  R.join(' ', smwlih);
+
+            return smwlih;
         })
         .catch(err => {
             console.error(err);
