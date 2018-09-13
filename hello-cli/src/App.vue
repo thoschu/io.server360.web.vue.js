@@ -7,7 +7,7 @@
         <form @submit.prevent="addTown">
             <label for="new-town"> New Town:</label>
             <input id="new-town" v-validate="'required|alpha|min:3'" name="alpha_field" type="text" value="Berlin" v-model="newTown">
-            <transition enter-active-class="animated jackInTheBox">
+            <transition enter-active-class="animated rubberBand">
                 <p :style="{'color': errors.has('alpha_field') ? 'red' : 'green'}" v-show="errors.has('alpha_field')">
                     {{errors.first('alpha_field')}}
                 </p>
@@ -20,7 +20,7 @@
         <Towns v-bind:towns="towns"/>
         <Test msg="Foo bar baz"/>
         <hr>
-        <ul>
+        <ul style="list-style-type: none">
             <li>
                 <router-link to="/info">INFO</router-link>
             </li>
@@ -28,7 +28,7 @@
                  <router-link to="/images">IMAGES</router-link>
              </li>
         </ul>
-        <transition enter-active-class="animated zoomIn">
+        <transition enter-active-class="animated zoomInDown">
             <router-view></router-view>
         </transition>
         <!--<Info />-->
