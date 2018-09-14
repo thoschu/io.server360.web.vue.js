@@ -1,18 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <title>hello-cli</title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but hello-cli doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>hello-vue-cli</title>
+        <link rel="import" href="./plugin.html" onload="(function (e) { console.log('Loaded import: ' + e);})()" onerror="(function(e) {console.error('Error loading import: ' + e); })()">
+        <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+        <!--<script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.0.0/"></script>-->
+        <script src="./js/modernizr-custom.js"></script>
+        <style>
+            .templateno,
+            .templateyes,
+            .customelementsno,
+            .customelementsyes,
+            .importno,
+            .importyes {
+                display: none;
+            }
+
+            /* Modernizr wird dem HTML-Objekt eine der folgenden Klassen zuweisen, je nachdem ob der Browser das entsprechende Feature unterstützt oder nicht. */
+            .no-template .templateno,
+            .template .templateyes,
+            .no-customelements .customelementsno,
+            .customelements .customelementsyes,
+            .no-htmlimports .importno,
+            .htmlimports .importyes {
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <noscript>
+            <strong>We're sorry but hello-cli doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+        </noscript>
+        <header>
+            <div class="importno">
+                <p>Dieser Browser unterstützt keine HTML-Imports...</p>
+            </div>
+            <div class="customelementsno">
+                <p>Dieser Browser unterstützt keine Custom Elements...</p>
+            </div>
+            <div class="templateno">
+                <p>Dieser Browser unterstützt keine HTML Template...</p>
+            </div>
+            <div class="importyes">
+                <p>Dieser Browser unterstützt HTML-Imports!!!</p>
+            </div>
+            <div class="customelementsyes">
+                <p>Dieser Browser unterstützt Custom Elements!!!</p>
+            </div>
+            <div class="templateyes">
+                <p class="">Dieser Browser unterstützt HTML Template...</p>
+                <h6>Example heading <span class="badge badge-secondary">New</span></h6>
+                <template>
+                    <p>Ich bin Eintrag Nr. {{num}}</p>
+                </template>
+            </div>
+        </header>
+        <main>
+            <div id="app"></div>
+            <!-- built files will be auto injected -->
+        </main>
+        <footer>
+            <flag-icon country="Holland"></flag-icon>
+        </footer>
+        <script>
+            if (Modernizr.htmlimports && Modernizr.template && Modernizr.customelements ) {
+                console.log('#######');
+
+                var link = document.querySelector('link[rel="import"]');
+                var content = link.import;
+                // Grab DOM from warning.html's document.
+                var el = content.querySelector('.warning');
+                document.body.appendChild(el.cloneNode(true));
+
+                var tpl = document.querySelector('template').content;
+                for(var i = 0; i < 3; i++){
+                    var p = tpl.querySelector('p').cloneNode(true);
+                    p.innerHTML = p.innerHTML.replace('{{num}}', i + 1);
+                    document.body.appendChild(p);
+                }
+
+                class FlagIcon extends HTMLElement {
+                    constructor() {
+                        super();
+                        this._countryCode = null;
+
+                        // console.log(this.createShadowRoot());
+                        // var widget = document.createElement('div');
+                        // var shadowRoot = widget.createShadowRoot();
+                        // var content = document.createElement('p');
+                        // content.innerHTML = 'Hallo Schattenwelt!';
+                        // shadowRoot.appendChild(content);
+                        // document.body.appendChild(widget);
+
+                        this.addEventListener("click", () => {
+                            // Draw some fancy animation effects!
+                            window.alert('..........');
+                            this.innerHTML = "Paragraph changed!";
+                        });
+                    }
+
+                    static get observedAttributes() {
+                        return ["country"];
+                    }
+
+                    attributeChangedCallback(name, oldValue, newValue) {
+                        // name will always be "country" due to observedAttributes
+                        this._countryCode = newValue;
+                        this._updateRendering();
+                    }
+
+                    connectedCallback() {
+                        this._updateRendering();
+                    }
+
+                    get country() {
+                        return this._countryCode;
+                    }
+                    set country(v) {
+                        this.setAttribute("country", v);
+                        console.log('!!!!!!!!!!!');
+                    }
+
+                    _updateRendering() {
+                        // Left as an exercise for the reader. But, you'll probably want to
+                        // check this.ownerDocument.defaultView to see if we've been
+                        // inserted into a document with a browsing context, and avoid
+                        // doing any work if not.
+                        console.log('-----------------');
+                        this.innerHTML = "fooooooooooooo";
+                    }
+                }
+
+                customElements.define("flag-icon", FlagIcon);
+
+            } else {
+                console.log('*********');
+            }
+        </script>
+    </body>
 </html>
