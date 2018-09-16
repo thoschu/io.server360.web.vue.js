@@ -24,7 +24,7 @@ class Resolver {
                 return Math.random() < 0.5 ? 'Take it easy' : 'Salvation lies within';
             },
             rollThreeDice: () => {
-                return [1, 2, 3].map(_ => 1 + Math.floor(Math.random() * 6));
+                return [1, 2, 3].map(_ => _ + Math.floor(Math.random() * 6));
             },
             me: () => {
                 return new User('Tom S.');
@@ -32,6 +32,7 @@ class Resolver {
         };
     }
 
+    // API-Root stellt eine Resolver-Funktion für jeden zugreifenden Endpunkt zur Verfügung
     get root() {
         return this._root;
     }
@@ -43,3 +44,5 @@ class Resolver {
         return _schema;
     }
 }
+
+module.exports = Resolver;

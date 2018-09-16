@@ -1,14 +1,32 @@
-<!--<template>-->
-    <!--<p id="tom">Thomas Schulte in Bielefeld...</p>-->
-<!--</template>-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Gamja+Flower');
 
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>-->
-<!--<script>-->
-    <!--console.log(R.concat('foo', ' und bar'));-->
-<!--</script>-->
+    p {
+        font-family: 'Gamja Flower', cursive;
+    }
+</style>
 
+<template>
+    <style >
+        p {
+            color: red;
+        }
+    </style>
+    <div id="tba">
+        <p>I'm template content A!!!</p>
+        <content></content>
+    </div>
+    <div id="tcb">
+        <p>I'm template content B!!!</p>
+        <content></content>
+    </div>
+</template>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
 <script>
     // https://www.html5rocks.com/en/tutorials/webcomponents/imports/
+
     // importDoc references this import's document
     var importDoc = document.currentScript.ownerDocument;
 
@@ -19,28 +37,99 @@
     // and append it to the importing document.
     var styles = importDoc.querySelector('link[rel="stylesheet"]');
     mainDoc.head.appendChild(styles.cloneNode(true));
-</script>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<style>
-    @import url('https://fonts.googleapis.com/css?family=Gamja+Flower');
+    // Define and register <tho-schu>.
+    var proto = Object.create(HTMLElement.prototype);
+    proto.createdCallback = function () {
+        this.innerHTML = 'Hello, <b>' + (this.getAttribute('name') || '?') + '</b>';
+    };
+    mainDoc.registerElement('tho-schu', {prototype: proto});
 
-    p {
-        font-family: 'Gamja Flower', cursive;
-    }
-</style>
+    class TestTag extends HTMLElement {
 
-<div class="warning">
-    <style>
-        p {
-            color: red !important;
+        constructor() {
+            super();
+
+            this.addEventListener("click", () => {
+                alert(this.test);
+            });
         }
-    </style>
-    <p>Warning!</p>
-    <h4>This page is under construction</h4>
-</div>
 
-<div class="outdated">
-    <h3>Heads up!</h3>
-    <p>This content may be out of date</p>
-</div>
+        static get observedAttributes() {
+            return ["country", "test"];
+        }
+
+        attributeChangedCallback(name, oldValue, newValue) {
+            // console.log(name); console.log(oldValue); console.log(newValue);
+            switch (name) {
+                case 'country':
+                    this.countryCode = newValue;
+                    break;
+                case 'test':
+                    this.test = newValue;
+                    break;
+            }
+
+            this._updateRendering(undefined);
+        }
+
+        connectedCallback() {
+            const template = importDoc.querySelector('template');
+            const templContent = template.content;
+            const clone = mainDoc.importNode(templContent, true); // import template into
+            clone.getElementById('tba').remove();
+            //this.appendChild(clone.querySelector('#tba'));
+
+            const shadowRoot = this.attachShadow({mode: 'open'});
+            shadowRoot.appendChild(clone);
+
+            this._getData();
+        }
+
+        get countryAttribute() {
+            return this.getAttribute("country");
+        }
+        set countryAttribute(value) {
+            this.setAttribute("country", value);
+        }
+
+        get testAttribute() {
+            return this.getAttribute("test");
+        }
+        set testAttribute(value) {
+            this.setAttribute("test", value);
+        }
+
+        get countryCode() {
+            return this._countryCode;
+        }
+        set countryCode(value) {
+            this._countryCode = value;
+        }
+
+        get test() {
+            return this._test;
+        }
+        set test(value) {
+            this._test = value;
+        }
+
+        _getData() {
+            fetch('https://jsonplaceholder.typicode.com/todos/1')
+                .then(response => response.json())
+                .then(json => {
+                    this._updateRendering(json);
+                });
+        }
+
+        _updateRendering(value) {
+            if (value) {
+                console.log(value);
+                console.log(this.ownerDocument.defaultView);
+            } else {
+            }
+        }
+    }
+
+    customElements.define("test-tag", TestTag);
+</script>

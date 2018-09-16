@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <h1>{{info}}</h1>
         <img alt="Vue logo" src="./assets/logo.png">
         <p>{{by}}</p>
         <p>{{year}}</p>
@@ -49,6 +50,7 @@
         },
         data: () => {
             return {
+                info: '',
                 by: '',
                 year: 2018,
                 towns: undefined,
@@ -93,9 +95,9 @@
                 {
                     me {
                         towns
-
                         departments {
                             kind(index: 1)
+                            info
                         }
                     }
 
@@ -105,6 +107,7 @@
 
             graphQlPromise('http://localhost:4000/graphql', query).then(r => {
                 this.$log.debug(r.me.departments.kind);
+                this.info = r.me.departments.info;
                 this.by = r.hello;
                 this.towns = r.me.towns
             });
