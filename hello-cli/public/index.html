@@ -5,9 +5,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title>hello-vue-cli</title>
-        <!--
+
         <link rel="import" href="./plugin.html" onload="(function (e) { console.log('Loaded import: ' + e);})()" onerror="(function(e) {console.error('Error loading import: ' + e); })()">
-        -->
+        <link rel="import" href="./plusserver.html">
+
         <link rel="icon" href="<%= BASE_URL %>favicon.ico">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
@@ -31,6 +32,10 @@
             .no-htmlimports .importno,
             .htmlimports .importyes {
                 display: block;
+            }
+
+            footer {
+                background-color: #888888;
             }
         </style>
     </head>
@@ -69,8 +74,9 @@
             <hr>
             <tho-schu name="Tom S."></tho-schu>
             <br>
-            <!--<test-tag country="Germany" test="Paragraph changed!!!"></test-tag>-->
-
+            <test-tag country="Germany" test="Paragraph changed!!!"></test-tag>
+            <hr>
+            <plusserver-test url="https://jsonplaceholder.typicode.com/todos/1"></plusserver-test>
         </footer>
         <script>
             if (Modernizr.htmlimports && Modernizr.template && Modernizr.customelements ) {
