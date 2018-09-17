@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Page Not Found</title>
+        <title>Page Not Found - 404</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
             * {
@@ -48,12 +48,40 @@
                 }
 
             }
-
         </style>
     </head>
     <body>
-        <h1>Page Not Found</h1>
-        <p>Sorry, but the page you were trying to view does not exist.</p>
+        <div><h1>Page Not Found</h1></div>
+        <div id="container">
+            <p slot="custom-text"></p>
+        </div>
+        <template id="custom-template">
+            <p>Sorry, but the page you were trying to view does not exist.</p>
+            <p>https://github.com/webcomponents/webcomponentsjs</p>
+            <p><slot name="custom-text">We can put whatever we want here!</slot></p>
+        </template>
+        <!--<hr>-->
+        <!--<script type="module">-->
+            <!--import {addTextToBody} from './utils.mjs';-->
+            <!--addTextToBody('Modules are pretty cool.');-->
+        <!--</script>-->
+        <!--<script type="module" src="./utils.mjs"></script>-->
+        <!--<script nomodule src="utils.js"></script>-->
+        <hr>
+        <!--<counter-element greeting="Hallo Köln..."></counter-element>-->
+        <counter-element></counter-element>
+        <script>
+            // https://github.com/webcomponents/webcomponentsjs
+            const template = document.getElementById("custom-template");
+            const templateContent = template.content;
+            const container = document.getElementById("container");
+            // const templateInstance = templateContent.cloneNode(true);
+            // container.appendChild(templateInstance);
+            const shadowRoot = container.attachShadow({mode: 'open'});
+            shadowRoot.appendChild(templateContent.cloneNode(true));
+        </script>
+        <script src="./counter-element.js"></script>
+        <hr>
         <!-- This <div> will hold the shadow roots. -->
         <div id="one">
             <!-- This heading will not be displayed -->
@@ -94,7 +122,6 @@
                     /// const h6 = document.createElement('h6');
                     this._h6 = document.createElement('h6');
 
-
                     // h6.textContent = 'Hello world - footer!';
                     this._h6.textContent = 'Hello world - footer!';
 
@@ -122,17 +149,22 @@
                     //     <p id="badges">${this._four}</p>
                     //     <p>Wait a second... <span class="badge badge-secondary">this.getAttribute('text')</span></p>
                     // `;
+                    // this._shadowRoot.innerHTML = '<!-- styles are scoped to fancy-404! --><style>p {color: blue; font-family: "Bahnschrift", cursive;}</style>' +
+                    //     '<p id="tabs">' + this.four + '</p>' +
+                    //     '<p id="panels">' + this.zero + '</p>' +
+                    //     '<p id="badges">' + this.four + '</p>' +
+                    //     '<p><span class="badge badge-secondary">' + this.getAttribute("text") + '</span></p>';
                     this._shadowRoot.innerHTML = `
                         <style>
                             p {
                                 color: blue;
-                                font-family: 'Bahnschrift', cursive;
+                                font-family: "Bahnschrift", cursive;
                             }
-                        </style> <!-- styles are scoped to fancy-404! -->
-                        <p id="tabs">${this.four}</p>
-                        <p id="panels">${this.zero}</p>
-                        <p id="badges">${this.four}</p>
-                        <p><span class="badge badge-secondary">${this.getAttribute('text')}</span></p>
+                        </style>
+                        <p id="tabs">${this._four}</p>
+                        <p id="panels">${this._zero}</p>
+                        <p id="badges">${this._four}</p>
+                        <p>Wait a second... <span class="badge badge-secondary">${this.getAttribute("text")}</span></p>
                     `;
 
                     // shadowRoot.appendChild(footer);
