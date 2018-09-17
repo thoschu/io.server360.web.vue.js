@@ -69,7 +69,7 @@
         <!--<script nomodule src="utils.js"></script>-->
         <hr>
         <!--<counter-element greeting="Hallo Köln..."></counter-element>-->
-        <counter-element></counter-element>
+        <!--<counter-element></counter-element>-->
         <script>
             // https://github.com/webcomponents/webcomponentsjs
             const template = document.getElementById("custom-template");
@@ -80,7 +80,8 @@
             const shadowRoot = container.attachShadow({mode: 'open'});
             shadowRoot.appendChild(templateContent.cloneNode(true));
         </script>
-        <script src="./counter-element.js"></script>
+        <!--<script src="./counter-element.js"></script>-->
+        <script src="https://www.thomas-schulte.de/cdn/counter-element.js"></script>
         <hr>
         <!-- This <div> will hold the shadow roots. -->
         <div id="one">
