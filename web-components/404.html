@@ -189,6 +189,110 @@
 
             customElements.define('fancy-404', Fancy404);
         </script>
+        <section style="background-color: aquamarine;">
+            <template id="slots">
+                <style>
+                    table {
+                        table-layout: fixed;
+                        border-collapse: collapse;
+                        margin-bottom: 10px;
+                    }
+
+                    th {
+                        width: 300px;
+                    }
+
+                    th,
+                    td {
+                        border: 1px solid;
+                    }
+                </style>
+                <table>
+                    <tr>
+                        <th><slot name='title-1'></slot></th>
+                        <th><slot name='title-2'></slot></th>
+                    </tr>
+                    <tr>
+                        <td><slot name='value-1.1'></slot></td>
+                        <td><slot name='value-1.2'></slot></td>
+                    </tr>
+                    <tr>
+                        <td><slot name='value-2.1'></slot></td>
+                        <td><slot name='value-2.2'></slot></td>
+                    </tr>
+                </table>
+            </template>
+            <div class="tableslots">
+                <span slot='title-1'>Title A</span>
+                <span slot='title-2'>Title B</span>
+                <span slot='value-1.1'>Value A.1</span>
+                <span slot='value-1.2'>Value A.2</span>
+                <span slot='value-2.1'>Value B.1</span>
+                <span slot='value-2.2'>Value B.2</span>
+            </div>
+            <div class="tableslots">
+                <span slot='title-1'>Title C</span>
+                <span slot='title-2'>Title D</span>
+                <span slot='value-1.1'>Value C.1</span>
+                <span slot='value-1.2'>Value C.2</span>
+                <span slot='value-2.1'>Value D.1</span>
+                <span slot='value-2.2'>Value D.2</span>
+            </div>
+            <script>
+                // check if Shadow DOM is supported
+                if ('attachShadow' in document.createElement('div')) {
+                    console.info('attachShadow is supported');
+                    let templateContent = document.querySelector('template#slots').content;
+                    let divs = document.querySelectorAll('div.tableslots');
+
+                    divs.forEach(function (div) {
+                        div.attachShadow({  mode: 'open' }).appendChild(templateContent.cloneNode(true));
+                    });
+                } else
+                    console.warn('attachShadow not supported');
+            </script>
+        </section>
+        <section style="background-color: antiquewhite;">
+            <template id="vue">
+                <style>
+                    p {
+                        color: greenyellow;
+                    }
+                </style>
+                <div id="app">
+                    <p>{{ message }}</p>
+                </div>
+                <script>
+                    document.write( 'exected' );
+                </script>
+                <script src="//cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
+                <script defer>
+                    let vuejs = document.createElement('script');
+                    vuejs.setAttribute('src', "//cdn.jsdelivr.net/npm/vue/dist/vue.js");
+                    document.head.appendChild(vuejs);
+
+                    let templateContentVue = document.querySelector('template#vue').content;
+
+                    console.log(templateContentVue);
+
+
+                    // const app = new Vue({
+                    //     el: '#app',
+                    //     data: {
+                    //         message: 'Hello Vue!'
+                    //     }
+                    // });
+
+
+                </script>
+            </template>
+            <div id="vueTemplateContent"></div>
+            <script>
+                let templateVueContent = document.querySelector('template#vue').content;
+                let section = document.getElementById('vueTemplateContent');
+                section.attachShadow({  mode: 'open' }).appendChild(templateVueContent.cloneNode(true));
+            </script>
+        </section>
     </body>
 </html>
 <!-- IE needs 512+ bytes: https://blogs.msdn.microsoft.com/ieinternals/2010/08/18/friendly-http-error-pages/ -->
